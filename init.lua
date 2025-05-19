@@ -705,6 +705,9 @@ require('lazy').setup({
             },
           },
         },
+        templ = {},
+        html = {},
+        cssls = {},
         sqlls = {},
         yamlls = {},
         jsonls = {},
@@ -805,6 +808,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         gopls = { 'goimports', 'gofmt' },
+        templ = { 'gofmt', 'templ', 'injected' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -987,8 +991,9 @@ require('lazy').setup({
         'cpp',
         'go',
         'diff',
-        -- 'html',
-        -- 'css',
+        'html',
+        'css',
+        'templ',
         'lua',
         'luadoc',
         'markdown',
