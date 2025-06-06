@@ -16,6 +16,8 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- Set cmdheight = 2
+-- vim.opt.cmdheight = 2
 -- Make line numbers default
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -1015,6 +1017,14 @@ require('lazy').setup({
   },
   {
     'b0o/schemastore.nvim',
+  },
+  {
+    'm4xshen/hardtime.nvim',
+    lazy = false,
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    opts = {
+      showmode = false,
+    },
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
