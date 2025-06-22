@@ -614,25 +614,15 @@ require('lazy').setup({
         gopls = {
           settings = {
             gopls = {
-              analyses = {
-                unusedparams = true,
-                shadow = true,
-                nilness = true,
-                unusedwrite = true,
-                fieldalignment = true,
-                unusedvariable = true,
-                ST1003 = true, -- naming style checks
-              },
-              staticcheck = true,
               hints = {
                 assignVariableTypes = true,
                 compositeLiteralFields = true,
+                compositeLiteralTypes = true,
                 constantValues = true,
                 functionTypeParameters = true,
                 parameterNames = true,
                 rangeVariableTypes = true,
               },
-              directoryFilters = { '-.git', '-node_modules' },
             },
           },
         },
@@ -640,7 +630,8 @@ require('lazy').setup({
         html = {},
         cssls = {},
         -- sqlls = {},
-        -- dockerls = {},
+        dockerls = {},
+        docker_compose_language_service = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -776,6 +767,7 @@ require('lazy').setup({
         javascriptreact = { 'prettier' },
         html = { 'prettier' },
         css = { 'prettier' },
+        json = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -888,11 +880,12 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+    -- 'folke/tokyonight.nvim',
+    'EdenEast/nightfox.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
+      require('nightfox').setup {
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
@@ -901,7 +894,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'carbonfox'
     end,
   },
 
