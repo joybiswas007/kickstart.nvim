@@ -876,7 +876,6 @@ require('lazy').setup({
     },
   },
   {
-
     'romus204/go-tagger.nvim',
     config = function()
       require('go-tagger').setup {
