@@ -760,7 +760,7 @@ require('lazy').setup({
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('gruvbox').setup {
-        -- transparent_mode = true,
+        transparent_mode = true,
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
@@ -893,6 +893,21 @@ require('lazy').setup({
         skip_private = true, -- Skip unexported fields (starting with lowercase)
       }
     end,
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    opts = {
+      direction = 'float',
+      open_mapping = [[<c-t>]],
+      insert_mappings = true,
+      terminal_mappings = true,
+      start_in_insert = true,
+      float_opts = {
+        border = 'curved', -- options: 'single' | 'double' | 'shadow' | 'curved'
+        winblend = 3,
+      },
+    },
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
