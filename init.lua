@@ -536,7 +536,48 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              -- Enhanced Static Analysis
+              analyses = {
+                unusedparams = true,
+                shadow = true,
+                nilness = true,
+                unusedwrite = true,
+                useany = true,
+                fieldalignment = false, -- Warns about struct memory layout padding
+              },
+              staticcheck = true, -- Enables full staticcheck suite inside gopls
+              gofumpt = true, -- Stricter, cleaner formatting standard
+              completeUnimported = true, -- Autocomplete packages and types not yet imported
+              usePlaceholders = true, -- Generates parameter placeholders in func completions
+
+              -- Rich Inlay Hints (Toggleable with your <leader>th)
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+
+              -- Code Lenses
+              codelenses = {
+                generate = true, -- Run `go generate`
+                gc_details = false, -- View compiler optimization & escape analysis
+                test = true, -- Run tests directly from codelens
+                tidy = true, -- Run `go mod tidy`
+                upgrade_dependency = true,
+                run_govulncheck = true, -- Security vulnerability checking
+              },
+              semanticTokens = true,
+            },
+          },
+        },
+        kotlin_lsp = {},
         -- pyright = {},
         -- rust_analyzer = {},
         --
@@ -631,7 +672,7 @@ require('lazy').setup({
           return nil
         else
           return {
-            timeout_ms = 500,
+            timeout_ms = vim.bo[bufnr].filetype == 'kotlin' and 3000 or 500,
             lsp_format = 'fallback',
           }
         end
@@ -639,6 +680,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'goimports', 'gofmt' },
+        kotlin = { 'ktlint' },
         templ = { 'templ' },
         javascript = { 'prettier' },
         typescript = { 'prettier' },
@@ -755,13 +797,15 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'ellisonleao/gruvbox.nvim',
+    'folke/tokyonight.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('gruvbox').setup {
-        transparent_mode = true,
+      require('tokyonight').setup {
+        transparent = true,
         styles = {
+          sidebars = 'transparent',
+          floats = 'transparent',
           comments = { italic = false }, -- Disable italics in comments
         },
       }
@@ -769,7 +813,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'tokyonight'
     end,
   },
 
@@ -828,7 +872,7 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       local parsers =
-        { 'bash', 'c', 'diff', 'go', 'javascript', 'sql', 'css', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+        { 'bash', 'c', 'diff', 'go', 'javascript', 'sql', 'css', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'kotlin' }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
